@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BikerApp</string>
+    <string name="title_home">Home</string>
+    <string name="title_emergency">Emergency</string>
+    <string name="title_route">Route</string>
+    <string name="title_social">Social</string>
+    <string name="title_data">Data</string>
+
+</resources>
