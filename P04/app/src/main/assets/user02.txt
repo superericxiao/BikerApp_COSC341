@@ -24,4 +24,4 @@
 23:william:pass23:william@email.com:12345678910:United States,,:::rachel,sarah,vanessa,xavier:
 24:xavier:pass24:xavier@email.com:12345678910:Canada,Prince Edward Island,Charlottetown:::tony,ulysses,william:
 25:yvette:pass25:yvette@email.com:12345678910:Canada,Nova Scotia,Halifax:::effie,georgia,isaac,ophelia,ulysses,zachariah:
-26:zachariah:zacharia@email.com:pass26:12345678910:Canada,,:::tony,vanessa,yvette:
+26:zachariah:pass26:zacharia@email.com:12345678910:Canada,,:::tony,vanessa,yvette:

@@ -43,28 +43,13 @@ public class MainActivity extends AppCompatActivity {
         Button btn_goToLogin = findViewById(R.id.btn_goToLogin);
         Button btn_goToNewsfeed = findViewById(R.id.btn_goToNewsfeed);
 
-        if (userLoggedIn()) {
+        if (currentUser()) {
             btn_goToLogin.setVisibility(View.GONE); // invisible, not in layout
             btn_goToNewsfeed.setVisibility(View.VISIBLE);
         } else {
             btn_goToLogin.setVisibility(View.VISIBLE);
             btn_goToNewsfeed.setVisibility(View.GONE); // invisible, not in layout
         }
-    }
-
-    /**
-     * Checks if any user is set as thisUser
-     *  called onCreate()-
-     *  returns true if any user in user array exists with user.isThisUser == true
-     *  otherwise returns false
-     */
-    public boolean userLoggedIn() {
-        for (User user: userArrayList) {
-            if (user.isThisUser()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
@@ -138,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToNewsfeed(View view) {
+        if (!currentUser())
+            users.get(users.size() - 1).setThisUser(true);
+
         Intent intent = new Intent(this, NewsfeedActivity.class);
 
         Bundle bundle = new Bundle();
@@ -162,6 +150,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private boolean currentUser() {
+        for (User user: users) {
+            if (user.isThisUser()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Helper method, returns user based on sent username
      *  If no user is found, returns null
@@ -174,7 +171,14 @@ public class MainActivity extends AppCompatActivity {
         }
         return null;
     }
-
+    public static User getUserFromId(int id) {
+        for (User user: users) {
+            if (user.getId() == id) {
+                return user;
+            }
+        }
+        return null;
+    }
     public static User getThisUser() {
         for (User user: users) {
             if (user.isThisUser()) {
@@ -183,4 +187,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return null;
     }
+
 }

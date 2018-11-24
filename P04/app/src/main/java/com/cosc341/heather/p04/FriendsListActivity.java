@@ -17,8 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import static com.cosc341.heather.p04.User.UserComparator;
 
 public class FriendsListActivity extends AppCompatActivity {
 
@@ -26,7 +30,7 @@ public class FriendsListActivity extends AppCompatActivity {
     private static final int USER_PROFILE_ID_CODE = 10000;
     private static final int USER_CHAT_ID_CODE = 20000;
 
-    ArrayList<User> users;
+   // ArrayList<User> users;
     User thisUser;
     User[] userFriends;
 
@@ -44,17 +48,23 @@ public class FriendsListActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        users = intent.getParcelableArrayListExtra("users");
+        thisUser = intent.getParcelableExtra("thisUser");
 
-        users = MainActivity.users;
+        //users = MainActivity.users;
 
+        String[] friendUsernames = thisUser.getFriendUsernames();
+        userFriends = new User[friendUsernames.length];
+
+        for (int i = 0; i < friendUsernames.length; i++) {
+            userFriends[i] = MainActivity.getUserFromUsername(friendUsernames[i]);
+        }
 
 
         LinearLayout table = findViewById(R.id.tableRows);
         char letter = 'A' - 1; // starts at character before a
 
         // sort users alphabetically
-        Collections.sort(users, User.UserComparator);
+        Arrays.sort(userFriends, UserComparator);
 
         LinearLayout row;
         TextView textView;
@@ -66,7 +76,7 @@ public class FriendsListActivity extends AppCompatActivity {
          *      will skip until username at appropriate letter
          *      then print all other username after next appropriate letter or 'Z'
          */
-        for (User user: users) {
+        for (User user: userFriends) {
             String username = user.getUsername();
             /*
             * Iterates through alphabet based on username
@@ -157,7 +167,7 @@ public class FriendsListActivity extends AppCompatActivity {
         int id = view.getId() - USER_PROFILE_ID_CODE;
         User user = new User("chatUser", "password", -1);
 
-        for (User user1 : users) {
+        for (User user1 : userFriends) {
             if (user1.getId() == id) {
                 user = user1;
                 break;
@@ -179,7 +189,7 @@ public class FriendsListActivity extends AppCompatActivity {
         int id = view.getId() - USER_CHAT_ID_CODE;
         User user = new User("chatUser", "password", -1);
 
-        for (User user1 : users) {
+        for (User user1 : userFriends) {
             if (user1.getId() == id) {
                 user = user1;
                 break;

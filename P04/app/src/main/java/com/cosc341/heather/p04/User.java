@@ -24,6 +24,8 @@ public class User implements Parcelable, Comparable {
     private ArrayList<String> friendUsernames;
     private int numFriends;
 
+    String chattingWith;
+
     private ArrayList<Integer> postIds;
 
     // indicates whether chatUser is current app chatUser
@@ -67,6 +69,8 @@ public class User implements Parcelable, Comparable {
         if (friendUsernames != null) {
            this.friendUsernames = friendUsernames;
         }
+
+        setChattingWith("");
     }
 
     public int getId() {
@@ -141,9 +145,15 @@ public class User implements Parcelable, Comparable {
     public String[] getFriendUsernames() {
         return friendUsernames.toArray(new String[friendUsernames.size()]);
     }
-
     public int getNumFriends() {
         return numFriends;
+    }
+
+    public String getChattingWith() {
+        return chattingWith;
+    }
+    public void setChattingWith(String chattingWith) {
+        this.chattingWith = chattingWith;
     }
 
     public boolean isThisUser() {
@@ -242,6 +252,7 @@ public class User implements Parcelable, Comparable {
         dest.writeTypedList(this.friends);
         dest.writeStringList(this.friendUsernames);
         dest.writeInt(this.numFriends);
+        dest.writeString(this.chattingWith);
         dest.writeList(this.postIds);
         dest.writeByte(this.thisUser ? (byte) 1 : (byte) 0);
         dest.writeString(this.email);
@@ -260,6 +271,7 @@ public class User implements Parcelable, Comparable {
         this.friends = in.createTypedArrayList(User.CREATOR);
         this.friendUsernames = in.createStringArrayList();
         this.numFriends = in.readInt();
+        this.chattingWith = in.readString();
         this.postIds = new ArrayList<Integer>();
         in.readList(this.postIds, Integer.class.getClassLoader());
         this.thisUser = in.readByte() != 0;

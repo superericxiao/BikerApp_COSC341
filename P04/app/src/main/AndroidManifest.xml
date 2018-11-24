@@ -28,8 +28,8 @@
         <activity
             android:name=".FriendsListActivity"
             android:parentActivityName=".NewsfeedActivity" />
-        <activity
-            android:name=".LoginActivity"/>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".GetChatUserActivity"></activity>
     </application>
 
 </manifest>

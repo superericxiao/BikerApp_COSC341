@@ -38,6 +38,7 @@ public class NewsfeedActivity extends AppCompatActivity { //implements NewsfeedA
 
     // All users
     public static ArrayList<User> users;
+    private User thisUser;
 
     // int added onto chatUser id to create unique button id
     // Also used in friends list - currently separate instance
@@ -57,24 +58,29 @@ public class NewsfeedActivity extends AppCompatActivity { //implements NewsfeedA
         numTextPosts = 0;
         numActivityPosts = 0;
 
-
+        /*
         Intent intent = getIntent();
 
         Bundle bundle = intent.getExtras();
+
         try {
             users = bundle.getParcelableArrayList("users");
         } catch (Exception ex) {
             System.err.println(ex);
         }
+        */
+
+        thisUser = MainActivity.getThisUser();
+        users = MainActivity.users;
 
         // sets thisUser avatar and header image
         ImageButton ib_userAvatar = findViewById(R.id.ib_userAvatar);
-        ib_userAvatar.setId(USER_PROFILE_ID_CODE + users.get(0).getId());
+        ib_userAvatar.setId(USER_PROFILE_ID_CODE + thisUser.getId());
 
         ImageView iv_header = findViewById(R.id.iv_userHeader);
 
-        ib_userAvatar.setImageResource(users.get(0).getProfilePicture());
-        iv_header.setImageResource(users.get(0).getHeaderPicture());
+        ib_userAvatar.setImageResource(thisUser.getProfilePicture());
+        iv_header.setImageResource(thisUser.getHeaderPicture());
 
         // sets thisUser avatar to go to thisUser profile when clicked
         ib_userAvatar.setOnClickListener(new View.OnClickListener() {
@@ -83,8 +89,6 @@ public class NewsfeedActivity extends AppCompatActivity { //implements NewsfeedA
                 goToUserProfile(view);
             }
         });
-
-
 
         // newsfeed containing posts
         newsfeedPosts = new LinkedList<>();
@@ -113,77 +117,6 @@ public class NewsfeedActivity extends AppCompatActivity { //implements NewsfeedA
         ib_friends.setImageResource(R.drawable.friends_icon);
     }
 
-    // TODO: 2018-11-21 Move to mainActivity, pass users from there
-    /**
-     * Loads users into arrayList
-     *  currently contains dummy users, change to loading from file
-     */
-    public void loadUsers() {
-        users = new ArrayList<>();
-
-        // thisUser + 26 total dummy users. thisUser index = 0
-
-        // Adds this thisUser to users array
-        users.add(new User("thisUser", "password", 1000));
-        users.get(0).setThisUser(true);
-        users.get(0).setProfilePicture(R.drawable.profilepic_blue);
-
-        // Adds dummy users to array
-        users.add(new User("abigail", "password", 1007));
-        users.add(new User("brandon", "password", 1008));
-        users.add(new User("charlie", "password", 1009));
-        users.add(new User("duncan", "password", 1010));
-        users.add(new User("effie", "password", 1011));
-
-        users.add(new User("fred", "password", 1012));
-        users.add(new User("george", "password", 1013));
-        users.add(new User("hannah", "password", 1014));
-        users.add(new User("isaac", "password", 1015));
-        users.add(new User("jack", "password", 1016));
-
-        users.add(new User("kellie", "password", 1017));
-        users.add(new User("lydia", "password", 1018));
-        users.add(new User("monica", "password", 1019));
-        users.add(new User("nathan", "password", 1020));
-        users.add(new User("ophelia", "password", 1021));
-
-        users.add(new User("patricia", "password", 1022));
-        users.add(new User("quinn", "password", 1023));
-        users.add(new User("rachel", "password", 1024));
-        users.add(new User("sarah", "password", 1025));
-        users.add(new User("tony", "password", 1026));
-
-        users.add(new User("ulysses", "password", 1027));
-        users.add(new User("vanessa", "password", 1028));
-        users.add(new User("william", "password", 1029));
-        users.add(new User("xavier", "password", 1030));
-        users.add(new User("yvette", "password", 1031));
-
-        users.add(new User("zachariah", "password", 1032));
-
-
-        // adds every other chatUser to thisUser's friend list
-        for (int i = 0; i < users.size(); i += 2) {
-            if (users.get(i) != null && !users.get(i).isThisUser()) {
-                users.get(0).addFriend(users.get(i));
-            }
-        }
-
-        // adds five random friends to each chatUser [can be same chatUser] except thisUser (chatUser(0))
-        // may add same chatUser multiple times or chatUser friends are being added to
-        for (User user: users) {
-            if (!user.isThisUser()) {
-                for (int i = 0; i < 5; i++) {
-                    user.addFriend(users.get((int) (Math.random() * 26) + 1));
-                }
-            }
-        }
-
-        // sets chatUser being chatted with to chatUser 1007 (abigail)
-        chatUserId = 1;
-
-    }
-
     /**
      * Dummy posts made by users 1-6
      *  Used to populate newsfeed
@@ -209,7 +142,7 @@ public class NewsfeedActivity extends AppCompatActivity { //implements NewsfeedA
          String content = et_post.getText().toString();
          System.out.println(content);
 
-         makeTextPost(users.get(0), content);
+         makeTextPost(thisUser, content);
     }
 
     /**
@@ -257,7 +190,7 @@ public class NewsfeedActivity extends AppCompatActivity { //implements NewsfeedA
      */
     public void goToFriendsList(View view) {
         Intent intent = new Intent(this, FriendsListActivity.class);
-        intent.putParcelableArrayListExtra("users", users.get(0).getFriends());
+        intent.putExtra("thisUser", MainActivity.getThisUser());
         startActivity(intent);
     }
 
@@ -271,9 +204,9 @@ public class NewsfeedActivity extends AppCompatActivity { //implements NewsfeedA
 
         Bundle bundle = new Bundle();
 
-        bundle.putParcelable("thisUser", users.get(0));
-        bundle.putParcelable("chatUser", users.get(chatUserId));
-
+        bundle.putParcelable("thisUser", thisUser);
+        //bundle.putParcelable("chatUser", MainActivity.getUserFromUsername(thisUser.chattingWith));
+        bundle.putParcelable("chatUser", users.get(0));
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -286,22 +219,9 @@ public class NewsfeedActivity extends AppCompatActivity { //implements NewsfeedA
     public void goToUserProfile(View view) {
         // gets id of user
         int id = view.getId() - USER_PROFILE_ID_CODE;
-        User user;
+        User user = MainActivity.getUserFromId(id);
 
-        if (id == 1000) { // current user
-            user = users.get(0);
-        } else {
-            user = new User("user", "password", -1);
-
-            for (User user1 : users) {
-                if (user1.getId() == id) {
-                    user = user1;
-                    break;
-                }
-            }
-        }
-
-        if (user.getId() == -1) {
+        if (user == null) {
             Toast.makeText(this, "Error: invalid user", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(this, UserProfileActivity.class);

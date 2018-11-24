@@ -21,6 +21,8 @@ public class ChatActivity extends AppCompatActivity {
     User thisUser;
     User chatUser;
 
+    private final int CHAT_USER_REQUEST_CODE = 0;
+
     ArrayList<Message> messages;
     RecyclerViewAdapter adapter;
     RecyclerView recyclerView;
@@ -38,6 +40,14 @@ public class ChatActivity extends AppCompatActivity {
 
         if (chatUser != null) {
 
+            findViewById(R.id.rv_chatRecyclerView).setVisibility(View.VISIBLE);
+            findViewById(R.id.et_postMessage).setVisibility(View.VISIBLE);
+            findViewById(R.id.et_postMessage).setVisibility(View.VISIBLE);
+            findViewById(R.id.ib_postMessage).setVisibility(View.VISIBLE);
+
+            findViewById(R.id.tv_noChatAvailable).setVisibility(View.GONE);
+            findViewById(R.id.btn_findChat).setVisibility(View.GONE);
+
             messages = new ArrayList<>();
 
             recyclerView = findViewById(R.id.rv_chatRecyclerView);
@@ -51,7 +61,15 @@ public class ChatActivity extends AppCompatActivity {
             postMessage(thisUser, "message from this user", new Date());
 
         } else {
-            Toast.makeText(this, "No chatUser passed", Toast.LENGTH_SHORT).show();
+            findViewById(R.id.rv_chatRecyclerView).setVisibility(View.GONE);
+            findViewById(R.id.et_postMessage).setVisibility(View.GONE);
+            findViewById(R.id.et_postMessage).setVisibility(View.GONE);
+            findViewById(R.id.ib_postMessage).setVisibility(View.GONE);
+
+            findViewById(R.id.tv_noChatAvailable).setVisibility(View.VISIBLE);
+            findViewById(R.id.btn_findChat).setVisibility(View.VISIBLE);
+
+
         }
     }
 
@@ -89,5 +107,20 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.smoothScrollToPosition(messages.size() - 1); // scrolls down to new message
     }
 
+    public void findUserToChat(View view) {
+        Intent intent = new Intent(this, GetChatUserActivity.class);
+        intent.putExtra("thisUser", thisUser);
+        startActivityForResult(intent, CHAT_USER_REQUEST_CODE);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CHAT_USER_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                chatUser = data.getParcelableExtra("chatUser");
+            }
+        }
+    }
 }
