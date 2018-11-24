@@ -1,0 +1,27 @@
+##:username:password:email:phonenumber:location[country,province,city]:profilePic:headerpic:friends:posts
+01:abigail:pass01:abigail@email.com:12345678910:Canada,British Columbia,Vancouver:::hannah,kelly,monica:
+02:brandon:pass02:brandon@email.com:12345678910:Canada,Ontario,:::duncan,charlie,jack,nathanv:
+03:charlie:pass03:charlie@email.com:12345678910:Canada,,:::brandon,duncan,fred,patricia:
+04:duncan:pass04:duncan@email.com:12345678910:United States,Washington,Seattle:::brandon,charlie,fred,hannah:
+05:effie:pass05:effie@email.com:12345678910:Canada,Alberta,Calgary:::hannah,ophelia,quinn,yvette:
+06:fred:pass06:fred@email.com:12345678910:Canada,British Columbia,:::charlie,duncan,lydia:
+07:georgia:pass07:georgia@email.com:12345678910:United States,,:::hannah,kelly,yvette:
+08:hannah:pass08:hannah@email.com:12345678910:Canada,British Columbia,Kamloops:::abigail,duncan,effie,georgia,lydia,isaac:
+09:isaac:pass09:isaac@email.com:12345678910:Canada,Manitoba,Winnipeg:::hannah,jack,monica,yvette:
+10:jack:pass10:jack@email.com:12345678910:United States,California,San Francisco:::brandon,isaac:
+11:kelly:pass11:kelly@email.com:12345678910:United States,California,Los Angeles:::abigail,georgia,patricia:
+12:lydia:pass12:lydia@email.com:12345678910:,,:::fred,hannah,rachel,quinn:
+13:monica:pass13:monica@email.com:12345678910:Canada,Ontario,Ottawa:::abigail,isaac,rachel,sarah:
+14:nathan:pass14:nathan@email.com:12345678910:Canada,,:::brandon,patricia,quinn,tony:
+15:ophelia:pass15:ophelia@email.com:12345678910:Canada,Nova Scotia,:::effie,quinn,sarah,ulysses,yvette:
+16:patricia:pass16:patricia@email.com:12345678910:Canada,Ottawa,:::charlie,lydia,nathan,ophelia,rachel:
+17:quinn:pass17:quinn@email.com:12345678910:United States,Maine,:::effie,lydia,nathan,ophelia,vanessa:
+18:rachel:pass18:rachel@email.com:12345678910:Canada,Quebec,Montreal:::lydia,monica,patricia,sarah,william:
+19:sarah:pass19:sarah@email.com:12345678910:Canada,,:::monica,ophelia,rachel,vanessa,william:
+20:tony:pass20:tony@email.com:12345678910:Canada,Newfoundland and Labrador,:::nathan,william,xavier,zachariah:
+21:ulysses:pass21:ulysses@email.com:12345678910:Canada,British Columbia,Kelowna:::ophelia,xavier,yvette:
+22:vanessa:pass22:vanessa@email.com:12345678910:,,:::quinn,sarah,tony,william,zachariah:
+23:william:pass23:william@email.com:12345678910:United States,,:::rachel,sarah,vanessa,xavier:
+24:xavier:pass24:xavier@email.com:12345678910:Canada,Prince Edward Island,Charlottetown:::tony,ulysses,william:
+25:yvette:pass25:yvette@email.com:12345678910:Canada,Nova Scotia,Halifax:::effie,georgia,isaac,ophelia,ulysses,zachariah:
+26:zachariah:zacharia@email.com:pass26:12345678910:Canada,,:::tony,vanessa,yvette:
