@@ -1,5 +1,6 @@
 package com.cosc341.bikerapp.bikerapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,8 +21,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     mTextMessage.setText(R.string.title_home);
                     return true;
+
                 case R.id.navigation_emergency:
-                    mTextMessage.setText(R.string.title_emergency);
+                    startActivity(new Intent(MainActivity.this, EmergencyActivity.class));
+
                     return true;
                 case R.id.navigation_route:
                     mTextMessage.setText(R.string.title_route);
